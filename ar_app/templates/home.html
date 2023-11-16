@@ -1,0 +1,22 @@
+<!-- {% extends 'base.html' %} -->
+<!-- {% block content %} -->
+<div>
+    <div>
+        <h1 class="text-center">Camera Feed</h1>
+        <video id="video-feed" width="640" height="480" autoplay></video>
+        <video 
+    </div>
+    <script>
+        // JavaScript code to access the camera and display the video stream
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                const videoElement = document.getElementById('video-feed');
+                videoElement.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+    </script>
+    <h3>name: </h3>
+</div>
+<!-- {% endblock %} -->
