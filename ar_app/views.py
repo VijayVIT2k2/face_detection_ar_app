@@ -49,11 +49,11 @@ def video_feed(request):
     return StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace;boundary=frame")
 
 def gen_frames():
-    cap = cv2.VideoCapture()
+    cap = cv2.VideoCapture(0)
     # .open(0)
-    print(str(cap)+"Cap")
-    cap.open(0)
-    print("Id: "+ str(cap.getBackendName()))
+    # print(str(cap)+"Cap")
+    # cap.open(0)
+    # print("Id: "+ str(cap.getBackendName()))
     if not cap.isOpened():
         print("Error: Could not open camera.")
         return
@@ -63,7 +63,7 @@ def gen_frames():
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh(static_image_mode=False,
                max_num_faces=4,
-               refine_landmarks=False,
+               refine_landmarks=True,
                min_detection_confidence=0.5,
                min_tracking_confidence=0.5)
     print("Face mesh created: "+ str(face_mesh))
@@ -91,6 +91,8 @@ def gen_frames():
             frame_bytes = buffer.tobytes()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+            cv2.imwrite(f"./imgs/frame_{time_string}_t.jpg", frame)
+            print(f"Image saved {time_string}")
             # print(str(yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')))
 
     except Exception as e:
