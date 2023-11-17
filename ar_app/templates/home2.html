@@ -1,0 +1,59 @@
+<!-- {% extends 'base.html' %} -->
+<!-- {% block content %} -->
+<!-- <div> -->
+    <div>
+        <h1 class="text-center">Camera Feed</h1>
+        <video id="video-feed" width="640" height="480" autoplay></video>
+    </div>
+        
+    
+    <script>
+        // JavaScript code to access the camera and display the video stream
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                const videoElement = document.getElementById('video-feed');
+                videoElement.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+
+        
+    </script>
+    <!-- <h3>name: </h3> -->
+    <!-- {% extends "base.html" %} -->
+<!-- 
+{% block content %}
+  {% load webcam_photoupload %}
+
+  {% webcam_photoupload_css %}
+  {% webcam_photoupload_js %}
+
+  <h2>Camera View</h2>
+
+  <div id="camera-container">
+    <video id="camera-feed" autoplay playsinline></video>
+    <button id="capture-button">Capture</button>
+  </div>
+
+  <form method="post" action="{% url 'webcam_photoupload_upload' %}">
+    {% csrf_token %}
+    <input type="hidden" name="photo" id="photo-input">
+    <button type="submit">Upload Photo</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var cameraView = new CameraView({
+        videoElement: 'camera-feed',
+        captureButton: 'capture-button',
+        photoInput: 'photo-input',
+      });
+
+      cameraView.init();
+    });
+  </script>
+{% endblock %} -->
+
+<!-- </div> -->
+<!-- {% endblock %} -->

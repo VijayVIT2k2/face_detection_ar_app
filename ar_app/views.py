@@ -1,5 +1,9 @@
 from django.shortcuts import render
+
+# from cv2 import cv2 as cv2
 import cv2
+
+import numpy as np
 import mediapipe as mp
 from django.http import StreamingHttpResponse
 import threading
@@ -58,3 +62,4 @@ def gen_frames():
 
 def ar_view(request):
     return render(request, 'ar_view.html')
+

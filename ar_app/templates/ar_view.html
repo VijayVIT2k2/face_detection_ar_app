@@ -1,4 +1,33 @@
 <div>
+    <style>
+        .vid{
+            width: auto;
+            height: max-content;
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+            border-radius: 700px;
+            padding: 5%;
+            background-color: antiquewhite;
+        }
+    </style>
     <h1 class="text-center">AR Face Detection</h1>
-    <img src="{% url 'video_feed' %}" alt="AR Face Detection" width="640" height="480">
+    <video class="vid"id="feed-vid" src="{% url 'video_feed' %}" alt="AR Face Detection" width="640" height="480"></video>
+    <video class="vid" id="video-feed2" width="640" height="480" autoplay></video>
+    <script>
+        navigator.mediaDevices.getUserMedia({video:true})
+            .then((stream)=>{
+                const vde = document.getElementById('video-feed2');
+                vde.srcObject = stream;
+        }).catch((error)=>{
+            console.error("Cam Err: ",error);
+        });
+        navigator.mediaDevices.getUserMedia({video:true})
+            .then((stream)=>{
+                const vde = document.getElementById('feed-vid');
+                vde.srcObject = stream;
+        }).catch((error)=>{
+            console.error("Cam Err: ",error);
+        });
+    </script>
 </div>
