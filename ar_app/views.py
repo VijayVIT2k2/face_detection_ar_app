@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # from cv2 import cv2 as cv2
 import cv2
+import os
 # import face_detection
 from win11toast import toast
 # import win11toast
@@ -10,10 +11,10 @@ import mediapipe as mp
 from django.http import StreamingHttpResponse
 import threading
 import time
-
+from datetime import datetime
 def base(request):
     return render(request, 'base.html')
-
+count =0
 def face_detection(frame, face_mesh):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = face_mesh.process(frame_rgb)
@@ -48,7 +49,7 @@ def video_feed(request):
     return StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace;boundary=frame")
 
 def gen_frames():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture()
     # .open(0)
     print(str(cap)+"Cap")
     cap.open(0)
@@ -69,23 +70,28 @@ def gen_frames():
     try:
         while True:
             success, frame = cap.read()
-
-            print("Facemesh: "+str(face_mesh) + "Success: " + str(success) +"\nRead: "+
-                  str(cap.read()))
             if not success or frame is None:
                 # toast("Failed to read Frame",duration = 'long')
                 print("Error: Failed to read frame.")
                 break
-            
-            print("Frame: "+str(frame))
-            print("Hello")
+            now=datetime.now()
+            time_string = now.strftime("%M_%S_%f")[:-3]
+            # cv2.imwrite(f"C:/Users/vijay/Desktop/imgs/frame_{time_string}_t.jpg", frame)
+            if not os.path.exists('imgs'):
+                os.makedirs('imgs')
+            cv2.imwrite(f"./imgs/frame_{time_string}_t.jpg", frame)
+            print(f"Image saved {time_string}")
+
+            # print("Facemesh: "+str(face_mesh) + "Success: " + str(success) +"\nRead: "+str(cap.read()))
+            # print("Frame: "+str(frame))
+            # print("Hello")
             frame = face_detection(frame, face_mesh)
-            print("Frame: "+str(frame))
+            # print("Frame: "+str(frame))
             _, buffer = cv2.imencode('.jpg', frame)
             frame_bytes = buffer.tobytes()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
-            print(str())
+            # print(str(yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')))
 
     except Exception as e:
         print(f"Error: {e}")
