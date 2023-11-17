@@ -12,22 +12,27 @@
         }
     </style>
     <h1 class="text-center">AR Face Detection</h1>
-    <video class="vid"id="feed-vid" src="{% url 'video_feed' %}" alt="AR Face Detection" width="640" height="480"></video>
-    <video class="vid" id="video-feed2" width="640" height="480" autoplay></video>
-    <script>
-        navigator.mediaDevices.getUserMedia({video:true})
-            .then((stream)=>{
-                const vde = document.getElementById('video-feed2');
-                vde.srcObject = stream;
-        }).catch((error)=>{
-            console.error("Cam Err: ",error);
-        });
-        navigator.mediaDevices.getUserMedia({video:true})
-            .then((stream)=>{
-                const vde = document.getElementById('feed-vid');
-                vde.srcObject = stream;
-        }).catch((error)=>{
-            console.error("Cam Err: ",error);
-        });
-    </script>
+    <!-- <video class="vid"id="feed-vid" src="{% url 'video_feed' %}" alt="AR Face Detection" width="640" height="480"></video> -->
+    <!-- <video class="vid" id="video-feed2" width="640" height="480" autoplay></video> -->
+    <video class = "vid"id = "feed-vid" src="{% url 'video_feed' %}" width="640" height="480" autoplay></video>
+    <!-- <script> -->
+        
+        <!-- // navigator.mediaDevices.getUserMedia({video:true})
+        //     .then((stream)=>{
+        //         const vde = document.getElementById('video-feed2');
+        //         vde.srcObject = stream;
+        // }).catch((error)=>{
+        //     print(error);
+        //     console.error("Cam Err 1: ",error);
+            
+        // });
+        // navigator.mediaDevices.getUserMedia({video:true})
+        //     .then((stream)=>{
+        //         const vdt = document.getElementById('feed-vid');
+        //         vdt.srcObject = stream;
+        // }).catch((error)=>{
+        //     console.error("Cam Err 2: ",error);
+        //     print(error);
+        // }); -->
+    <!-- // </script> -->
 </div>
